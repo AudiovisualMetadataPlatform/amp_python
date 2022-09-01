@@ -1,0 +1,56 @@
+Bootstrap: docker
+From: fedora:36
+
+%files
+
+
+%post
+dnf install -y https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
+
+dnf update -y --exclude=filesystem
+
+dnf install -y python3 python3-pip \
+    python3-azure-* python3-boto* python3-exif python3-filetype \
+    python3-gmqtt python3-google-api-client python3-google-api-core \
+    python3-google-auth* python3-google-cloud-* python3-google-crc32* \
+    python3-google-i18n-address python3-google-resumable-media \
+    python3-googleapis-common-protos python3-googletrans \
+    python3-graphviz python3-ibm-* python3-jira \
+    python3-json* python3-ldap* python3-markdown \
+    python3-mysql python3-numpy* python3-oauth*  \
+    python3-pillow python3-protobuf python3-psutil python3-pyyaml \
+    python3-requests* python3-s3transfer python3-scipy \
+    python3-semver python3-sqlalchemy \
+    python3-sqlalchemy+postgresql python3-sqlalchemy+mysql \
+    python3-ssh-python python3-textdistance python3-toml \
+    python3-urllib3 \
+    awscli ffmpeg jq ImageMagick sox gnuplot\
+    cmake g++ gcc python3-devel make
+
+pip install face-recognition ffmpeg-python pytesseract scenedetect spacy trello
+python3 -m spacy download en_core_web_lg
+
+dnf remove -y cmake g++ gcc *-devel make \
+    pipewire texlive proj-*
+
+dnf clean all
+
+%runscript
+# Galaxy removes PYTHONPATH at startup because it interferes
+# with the normal workings of galaxy.  That's kind of a pain
+# because we want to pass that to the tools so they don't have
+# to look hard for the amp libraries.
+#
+# So...let's add it here, based on AMP_ROOT which /doesn't/
+# get filtered by galaxy.
+
+if [ -n "$AMP_ROOT" ]; then
+    PYROOT=$AMP_ROOT/amp_bootstrap
+    if [ -n "$PYTHONPATH" ]; then
+        export PYTHONPATH=$PYROOT:$PYTHONPATH
+    else
+        export PYTHONPATH=$PYROOT
+    fi
+fi
+
+exec python3 "$@"
