@@ -57,8 +57,8 @@ def main():
     # Package it, if needed
     if args.package:
         try:
-            new_package = create_package(Path(args.destination), destdir / "amp_python",
-                                         metadata={'name': 'amp_python', 'version': '1.0', 'install_path': 'amp_python'},                                         
+            new_package = create_package('amp_python', '1.0', 'amp_python',
+                                         Path(args.destination), destdir / "amp_python",                                         
                                          hooks={'post': 'postinstall.py'},
                                          arch_specific=True)
             logging.info(f"New package in {new_package}")    
