@@ -27,7 +27,9 @@ dnf install -y python3 python3-pip \
     awscli ffmpeg jq ImageMagick sox gnuplot\
     cmake g++ gcc python3-devel make
 
-pip install face-recognition ffmpeg-python pytesseract scenedetect spacy trello
+pip install face-recognition ffmpeg-python pytesseract scenedetect spacy \
+    trello opencv-python
+  
 python3 -m spacy download en_core_web_lg
 
 dnf remove -y cmake g++ gcc *-devel make \
