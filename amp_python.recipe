@@ -25,9 +25,10 @@ dnf install -y python3 python3-pip \
     python3-ssh-python python3-textdistance python3-toml \
     python3-urllib3 \
     awscli ffmpeg jq ImageMagick sox gnuplot\
-    cmake g++ gcc python3-devel make
+    cmake g++ gcc python3-devel make \
+    python3-Levenshtein python3-num2words
 
-pip install face-recognition ffmpeg-python pytesseract scenedetect spacy trello
+pip install face-recognition ffmpeg-python pytesseract scenedetect spacy trello jiwer
 python3 -m spacy download en_core_web_lg
 
 dnf remove -y cmake g++ gcc *-devel make \
