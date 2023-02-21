@@ -28,7 +28,7 @@ dnf install -y python3 python3-pip \
     cmake g++ gcc python3-devel make \
     python3-Levenshtein python3-num2words
 
-pip install face-recognition ffmpeg-python pytesseract scenedetect spacy trello jiwer
+pip install face-recognition ffmpeg-python pytesseract scenedetect spacy py-trello jiwer
 python3 -m spacy download en_core_web_lg
 
 dnf remove -y cmake g++ gcc *-devel make \
