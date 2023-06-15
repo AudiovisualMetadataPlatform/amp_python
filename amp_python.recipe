@@ -1,5 +1,5 @@
 Bootstrap: docker
-From: fedora:36
+From: fedora:37
 
 %files
 
@@ -14,7 +14,7 @@ dnf install -y python3 python3-pip \
     python3-gmqtt python3-google-api-client python3-google-api-core \
     python3-google-auth* python3-google-cloud-* python3-google-crc32* \
     python3-google-i18n-address python3-google-resumable-media \
-    python3-googleapis-common-protos python3-googletrans \
+    python3-googleapis-common-protos \
     python3-graphviz python3-ibm-* python3-jira \
     python3-json* python3-ldap* python3-markdown \
     python3-mysql python3-numpy* python3-oauth*  \
@@ -24,12 +24,13 @@ dnf install -y python3 python3-pip \
     python3-sqlalchemy+postgresql python3-sqlalchemy+mysql \
     python3-ssh-python python3-textdistance python3-toml \
     python3-urllib3 \
-    awscli ffmpeg jq ImageMagick sox gnuplot\
+    awscli ffmpeg ffmpeg-devel jq ImageMagick sox gnuplot\
     cmake g++ gcc python3-devel make \
-    python3-Levenshtein python3-num2words
+    python3-Levenshtein python3-num2words tesseract
 
 pip install face-recognition ffmpeg-python pytesseract scenedetect spacy \
     py-trello jiwer opencv-python
+
 python3 -m spacy download en_core_web_lg
 
 dnf remove -y cmake g++ gcc *-devel make \

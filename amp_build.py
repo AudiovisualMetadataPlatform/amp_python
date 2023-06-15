@@ -19,8 +19,6 @@ def main():
     logging.basicConfig(format="%(asctime)s [%(levelname)-8s] (%(filename)s:%(lineno)d)  %(message)s",
                         level=logging.DEBUG if args.debug else logging.INFO)
 
-    # both singularity and apptainer will work, so let's pick one...
-    singularity = pick_program(['singularity', 'apptainer'])
 
     sif = Path(sys.path[0], 'amp_python.sif')
     recipe = Path(sys.path[0], 'amp_python.recipe')
@@ -29,7 +27,7 @@ def main():
     if not sif.exists() or recipe.stat().st_mtime > sif.stat().st_mtime:
         # build it
         logging.info(f"Building {sif!s}")        
-        p = subprocess.run([singularity, 'build', '--force', '--fakeroot', str(sif), str(recipe)])
+        p = subprocess.run(['apptainer', 'build', '--force', '--fakeroot', str(sif), str(recipe)])
         if p.returncode != 0:
             logging.error(f"Building container has failed with return code {p.returncode}")
             exit(1)
