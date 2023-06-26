@@ -4,5 +4,7 @@
 # amp libraries
 #
 
-import amp.config
+# BDW:  remove this temporarily until I can get the catch-22 of the libraries
+# resolved.
+#import amp.config
 
