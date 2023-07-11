@@ -26,7 +26,8 @@ dnf install -y python3 python3-pip \
     python3-urllib3 \
     awscli ffmpeg ffmpeg-devel jq ImageMagick sox gnuplot\
     cmake g++ gcc python3-devel make \
-    python3-Levenshtein python3-num2words tesseract
+    python3-Levenshtein python3-num2words tesseract \
+    python3-tkinter python3-matplotlib
 
 pip install face-recognition ffmpeg-python pytesseract scenedetect spacy \
     py-trello jiwer opencv-python
