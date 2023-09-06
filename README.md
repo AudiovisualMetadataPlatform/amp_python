@@ -18,3 +18,4 @@ Note:  The current directory, home directory, /tmp, and a few
 other directories are mounted from the host system, but
 /bin, /usr/bin, and others come from the container.
 
+Note: apptainer is not provided by this container.
