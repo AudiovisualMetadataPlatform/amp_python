@@ -19,3 +19,6 @@ other directories are mounted from the host system, but
 /bin, /usr/bin, and others come from the container.
 
 Note: apptainer is not provided by this container.
+
+## Building
+Like the other AMP packages, use amp_build.py to build the package
