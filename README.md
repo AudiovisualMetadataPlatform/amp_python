@@ -21,4 +21,4 @@ other directories are mounted from the host system, but
 Note: apptainer is not provided by this container.
 
 ## Building
-Like the other AMP packages, use amp_build.py to build the package
+Check out this repository into `$AMP_ROOT/src_repos` and then within the amp_bootstrap, run `./amp_devel build amp_python`
