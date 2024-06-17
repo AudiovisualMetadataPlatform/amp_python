@@ -1,5 +1,5 @@
 Bootstrap: docker
-From: fedora:37
+From: fedora:40
 
 %files
 
@@ -26,11 +26,14 @@ dnf install -y python3 python3-pip \
     python3-urllib3 \
     awscli ffmpeg ffmpeg-devel jq ImageMagick sox gnuplot\
     cmake g++ gcc python3-devel make \
+    openblas-devel lapack-devel\
     python3-Levenshtein python3-num2words tesseract \
-    python3-tkinter python3-matplotlib
-
-pip install face-recognition ffmpeg-python pytesseract scenedetect spacy \
-    py-trello jiwer opencv-python
+    python3-tkinter python3-matplotlib \
+    python3-opencv python3-ffmpeg-python python3-pytesseract \
+    python3-dlib 
+    
+pip install face-recognition scenedetect spacy \
+    py-trello jiwer
 
 python3 -m spacy download en_core_web_lg
 
