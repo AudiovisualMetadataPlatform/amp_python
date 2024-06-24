@@ -58,3 +58,5 @@ if [ -n "$AMP_ROOT" ]; then
 fi
 
 exec python3 "$@"
+
+# This is a pseudo comment to triger amp_python build: last updated on 2024-06-24
