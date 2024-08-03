@@ -59,4 +59,4 @@ fi
 
 exec python3 "$@"
 
-# This is a pseudo comment to triger amp_python build: last updated on 2024-06-24
+# This is a pseudo comment to triger amp_python build to retrieve latest MGM dependencies: last updated on 2024-08-02
