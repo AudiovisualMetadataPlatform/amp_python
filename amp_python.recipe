@@ -1,15 +1,16 @@
 Bootstrap: docker
-From: rockylinux:9.3
+From: fedora:41
 
 %files
 
 
 %post
 dnf install -y dnf-plugins-core
-dnf config-manager --setopt install_weak_deps=False --save
-cat /etc/dnf/dnf.conf
-dnf config-manager -v --set-enabled crb
-dnf install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.rpm
+dnf config-manager setopt install_weak_deps=False 
+#dnf config-manager -v --set-enabled crb
+#dnf install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.rpm
+
+
 
 dnf update -y --exclude=filesystem
 
@@ -19,41 +20,36 @@ dnf install -y awscli2 ffmpeg-free ffmpeg-free-devel jq ImageMagick \
 
 # install pre-build python packages
 dnf install -y \
-    python3.12 \
     python3-azure-* \
     python3-boto* \
-    python3-google-* python3-googleapis-* \
+    python3-dlib \
+    python3-exif \
+    python3-filetype python3-ffmpeg-python \
+    python3-gmqtt python3-google-* python3-googleapis-* \
     python3-jira python3-json* \
-    python3-ldap* \
+    python3-ldap* python3-Levenshtein \
     python3-markdown python3-matplotlib \
-    python3.12-numpy \
+    python3-numpy python3-num2words \
     python3-oauth* python3-opencv \
     python3-pillow python3-protobuf python3-psutil \
-    python3.12-pip     \
-    python3-pydantic python3-pygraphviz \
-    python3-PyMySQL python3.12-pyyaml \
-    python3.12-requests \
-    python3-s3transfer python3.12-scipy python3-semver python3-sqlalchemy \
-    python3.12-tkinter python3-toml \
-    python3.12-urllib3
+    python3-pip     \
+    python3-pydantic python3-pygraphviz python3-pytesseract \
+    python3-PyMySQL python3-pyyaml \
+    python3-requests \
+    python3-s3transfer python3-scipy python3-semver python3-sqlalchemy python3-ssh-python \
+    python3-textdistance* python3-tkinter python3-toml \
+    python3-urllib3
 
 # install development tools
-dnf install -y cmake g++ gcc python3.12-devel make
+#dnf install -y cmake g++ gcc python3-devel make
 
 # install more python packages
-pip3.12 install \
-    exif \
-    face-recognition ffmpeg-python filetype \
-    gmqtt \
-    jiwer \
-    Levenshtein \
-    num2words \
-    pytesseract py-trello \
-    scenedetect spacy ssh-python \
-    textdistance 
-    
-
-python3.12 -m spacy download en_core_web_lg
+pip3 install jiwer py-trello 
+pip3 install face-recognition
+pip3 install scenedetect
+# spacy is failing?
+#pip3 install spacy
+#python3 -m spacy download en_core_web_lg
 
 #dnf remove -y cmake g++ gcc make pipewire texlive proj-*
 
@@ -77,4 +73,4 @@ if [ -n "$AMP_ROOT" ]; then
     fi
 fi
 
-exec python3.12 "$@"
+exec python3 "$@"
