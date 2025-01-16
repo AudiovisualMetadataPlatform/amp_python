@@ -1,41 +1,61 @@
 Bootstrap: docker
-From: fedora:37
+From: rockylinux:9.3
 
 %files
 
 
 %post
-dnf install -y https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
+dnf install -y dnf-plugins-core
+dnf config-manager --setopt install_weak_deps=False --save
+cat /etc/dnf/dnf.conf
+dnf config-manager -v --set-enabled crb
+dnf install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.rpm
 
 dnf update -y --exclude=filesystem
 
-dnf install -y python3 python3-pip \
-    python3-azure-* python3-boto* python3-exif python3-filetype \
-    python3-gmqtt python3-google-api-client python3-google-api-core \
-    python3-google-auth* python3-google-cloud-* python3-google-crc32* \
-    python3-google-i18n-address python3-google-resumable-media \
-    python3-googleapis-common-protos \
-    python3-graphviz python3-ibm-* python3-jira \
-    python3-json* python3-ldap* python3-markdown \
-    python3-mysql python3-numpy* python3-oauth*  \
-    python3-pillow python3-protobuf python3-psutil python3-pyyaml \
-    python3-requests* python3-s3transfer python3-scipy \
-    python3-semver python3-sqlalchemy \
-    python3-sqlalchemy+postgresql python3-sqlalchemy+mysql \
-    python3-ssh-python python3-textdistance python3-toml \
-    python3-urllib3 \
-    awscli ffmpeg ffmpeg-devel jq ImageMagick sox gnuplot\
-    cmake g++ gcc python3-devel make \
-    python3-Levenshtein python3-num2words tesseract \
-    python3-tkinter python3-matplotlib
+# install general packages
+dnf install -y awscli2 ffmpeg-free ffmpeg-free-devel jq ImageMagick \
+  sox gnuplot tesseract
 
-pip install face-recognition ffmpeg-python pytesseract scenedetect spacy \
-    py-trello jiwer opencv-python
+# install pre-build python packages
+dnf install -y \
+    python3.12 \
+    python3-azure-* \
+    python3-boto* \
+    python3-google-* python3-googleapis-* \
+    python3-jira python3-json* \
+    python3-ldap* \
+    python3-markdown python3-matplotlib \
+    python3.12-numpy \
+    python3-oauth* python3-opencv \
+    python3-pillow python3-protobuf python3-psutil \
+    python3.12-pip     \
+    python3-pydantic python3-pygraphviz \
+    python3-PyMySQL python3.12-pyyaml \
+    python3.12-requests \
+    python3-s3transfer python3.12-scipy python3-semver python3-sqlalchemy \
+    python3.12-tkinter python3-toml \
+    python3.12-urllib3
 
-python3 -m spacy download en_core_web_lg
+# install development tools
+dnf install -y cmake g++ gcc python3.12-devel make
 
-dnf remove -y cmake g++ gcc *-devel make \
-    pipewire texlive proj-*
+# install more python packages
+pip3.12 install \
+    exif \
+    face-recognition ffmpeg-python filetype \
+    gmqtt \
+    jiwer \
+    Levenshtein \
+    num2words \
+    pytesseract py-trello \
+    scenedetect spacy ssh-python \
+    textdistance 
+    
+
+python3.12 -m spacy download en_core_web_lg
+
+#dnf remove -y cmake g++ gcc make pipewire texlive proj-*
 
 dnf clean all
 
@@ -57,4 +77,4 @@ if [ -n "$AMP_ROOT" ]; then
     fi
 fi
 
-exec python3 "$@"
+exec python3.12 "$@"
