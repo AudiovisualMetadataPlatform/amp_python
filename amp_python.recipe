@@ -48,8 +48,8 @@ pip3 install jiwer py-trello
 pip3 install face-recognition
 pip3 install scenedetect
 # spacy is failing?
-#pip3 install spacy
-#python3 -m spacy download en_core_web_lg
+pip3 install spacy
+python3 -m spacy download en_core_web_lg
 
 #dnf remove -y cmake g++ gcc make pipewire texlive proj-*
 
